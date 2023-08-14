@@ -2,3 +2,7 @@ name: vyper traceback bug
 
 foundry:
   host: auto
+
+ethereum:
+  local:
+    default_provider: foundry
