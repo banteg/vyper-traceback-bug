@@ -29,7 +29,7 @@ def test_template(template, accounts):
     template.set_n(42, sender=accounts[0])
     assert template.n() == 42
 
-    with ape.reverts(dev="wrong answer"):
+    with ape.reverts(dev_message="dev: wrong answer"):
         template.set_n(69, sender=accounts[0])
 
     assert template.n() == 42
@@ -41,7 +41,7 @@ def test_clone(clone, accounts):
     clone.set_n(42, sender=accounts[0])
     assert clone.n() == 42
 
-    with ape.reverts(dev="wrong answer"):
+    with ape.reverts(dev_message="dev: wrong answer"):
         clone.set_n(69, sender=accounts[0])
 
     assert clone.n() == 42
