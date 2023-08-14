@@ -1,0 +1,4 @@
+name: vyper traceback bug
+
+foundry:
+  host: auto
