@@ -45,7 +45,7 @@ def clone(template, factory, accounts):
     return ContractContainer(template.contract_type).at(receipt.return_value)
 
 
-def test_logic(contract, caller):
+def verify_logic(contract, caller):
     assert contract.n() == 0
 
     contract.set_n(5, sender=caller)
@@ -67,8 +67,8 @@ def test_logic(contract, caller):
 
 
 def test_template(template, accounts):
-    test_logic(template, accounts[0])
+    verify_logic(template, accounts[0])
 
 
 def test_clone(clone, accounts):
-    test_logic(clone, accounts[0])
+    verify_logic(clone, accounts[0])
