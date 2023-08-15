@@ -45,25 +45,30 @@ def clone(template, factory, accounts):
     return ContractContainer(template.contract_type).at(receipt.return_value)
 
 
+def test_logic(contract, caller):
+    assert contract.n() == 0
+
+    contract.set_n(5, sender=caller)
+    assert contract.n() == 5
+
+    with ape.reverts(dev_message="dev: assert not 2"):
+        contract.set_n(2, sender=caller)
+
+    with ape.reverts("raise if 3"):
+        contract.set_n(3, sender=caller)
+
+    with ape.reverts("assert not 4"):
+        contract.set_n(4, sender=caller)
+
+    with ape.reverts(dev_message="dev: assert 5"):
+        contract.set_n(6, sender=caller)
+
+    assert contract.n() == 5
+
+
 def test_template(template, accounts):
-    assert template.n() == 0
-
-    template.set_n(42, sender=accounts[0])
-    assert template.n() == 42
-
-    with ape.reverts(dev_message="dev: wrong answer"):
-        template.set_n(69, sender=accounts[0])
-
-    assert template.n() == 42
+    test_logic(template, accounts[0])
 
 
 def test_clone(clone, accounts):
-    assert clone.n() == 0
-
-    clone.set_n(42, sender=accounts[0])
-    assert clone.n() == 42
-
-    with ape.reverts(dev_message="dev: wrong answer"):
-        clone.set_n(69, sender=accounts[0])
-
-    assert clone.n() == 42
+    test_logic(clone, accounts[0])
